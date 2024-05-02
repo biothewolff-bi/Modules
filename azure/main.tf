@@ -44,6 +44,24 @@ resource "azurerm_key_vault" "kv" {
   tenant_id = var.tenant_id
 }
 
+resource "azurerm_data_factory" "adf" {
+  name = "adf-${var.project}-${var.location}-${var.environment}-01"
+  location = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  dynamic "github_configuration" {
+    for_each = var.environment == "dev" ? [true] : []
+
+    content {
+      git_url = "https://github.com/"
+      account_name = local.adf_gh_account_name
+      branch_name = local.adf_gh_branch_name
+      repository_name = local.adf_gh_repository_name
+      root_folder = local.adf_gh_root_folder
+    }
+  }
+}
+
 
 # AD group
 
