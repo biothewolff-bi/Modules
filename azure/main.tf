@@ -67,12 +67,14 @@ resource "azurerm_data_factory" "adf" {
 
 resource "azuread_group" "ad" {
   display_name = "GRP_${upper(var.project)}_${upper(var.environment)}"
-  owners = concat(["c9e54d7d-b96b-42f1-b1cc-3484fd8a4c72"], var.azuread_owners)
   security_enabled = true
+
+  owners = concat(["c9e54d7d-b96b-42f1-b1cc-3484fd8a4c72"], var.azuread_owners)
+  members = local.ad_members[*].id
 }
 
 resource "azurerm_role_assignment" "ad_contributor_role" {
   role_definition_name = "Contributor"
-  scope = var.subscription_id
+  scope = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.rg.id}"
   principal_id = azuread_group.ad.object_id
 }
