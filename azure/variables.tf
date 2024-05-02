@@ -5,6 +5,11 @@ variable "tenant_id" {
   type = string
 }
 
+variable "client_id" {
+  description = "The Azure Client ID"
+  type = string
+}
+
 variable "client_secret" {
   description = "The Azure Client secret used to log in"
   type = string
