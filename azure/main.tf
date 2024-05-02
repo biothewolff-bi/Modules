@@ -75,6 +75,6 @@ resource "azuread_group" "ad" {
 
 resource "azurerm_role_assignment" "ad_contributor_role" {
   role_definition_name = "Contributor"
-  scope = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.rg.id}"
+  scope = "/subscriptions/${var.subscription_id}"
   principal_id = azuread_group.ad.object_id
 }
