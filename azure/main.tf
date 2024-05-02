@@ -19,7 +19,7 @@ provider "azurerm" {
   client_id = var.client_id
   client_secret = var.client_secret
   tenant_id = var.tenant_id
-  subscription_id = "d7f4004e-6d46-4694-8c76-fd90a8c5a0da"
+  subscription_id = var.subscription_id
 }
 
 provider "azuread" {
@@ -69,4 +69,10 @@ resource "azuread_group" "ad" {
   display_name = "GRP_${upper(var.project)}_${upper(var.environment)}"
   owners = concat(["c9e54d7d-b96b-42f1-b1cc-3484fd8a4c72"], var.azuread_owners)
   security_enabled = true
+}
+
+resource "azurerm_role_assignment" "ad_contributor_role" {
+  role_definition_name = "Contributor"
+  scope = var.subscription_id
+  principal_id = azuread_group.ad.object_id
 }
