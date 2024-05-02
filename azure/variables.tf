@@ -1,3 +1,17 @@
+# Azure variables
+
+variable "tenant_id" {
+  description = "The Azure tenant ID"
+  type = string
+}
+
+variable "client_secret" {
+  description = "The Azure Client secret used to log in"
+  type = string
+}
+
+
+# Project variables
 
 variable "project" {
   description = "Value of the project's name"
