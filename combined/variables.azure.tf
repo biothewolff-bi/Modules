@@ -34,3 +34,8 @@ variable "azuread_owners" {
   description = "Owners of the Azure AD"
   type        = list(string)
 }
+
+variable "azuread_members_filepath" {
+  description = "File path to the CSV of AAD members"
+  type = string
+}

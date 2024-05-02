@@ -33,6 +33,7 @@ module "azure" {
     
     # Azure AD configuration
     azuread_owners = var.azuread_owners
+    azuread_members_filepath = var.azuread_members_filepath
 
     providers = {
       azurerm = azurerm
