@@ -10,11 +10,6 @@ terraform {
   }
 }
 
-provider "github" {
-    owner = var.organization_name
-    token = var.github_token
-}
-
 
 # Resources
 
@@ -30,7 +25,7 @@ resource "github_team" "project_team" {
 }
 
 resource "github_team_members" "project_team_members" {
-  team_id  = github_team.team.id
+  team_id  = github_team.project_team.id
 
   dynamic "members" {
     for_each = local.members
@@ -43,6 +38,7 @@ resource "github_team_members" "project_team_members" {
 
 resource "github_repository" "project_repo" {
   name = "${var.organization_name}.Project.${var.project}"
+  visibility = "private"
 }
 
 resource "github_repository_collaborators" "project_repo_collab" {

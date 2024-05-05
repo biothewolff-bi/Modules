@@ -11,6 +11,10 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 2.15.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.2"
+    }
   }
 }
 
@@ -32,6 +36,11 @@ provider "azuread" {
   client_id = var.azure_client_id
   client_secret = var.azure_client_secret
   tenant_id = var.azure_tenant_id
+}
+
+provider "github" {
+  owner = var.gh_organization_name
+  token = var.gh_token
 }
 
 
@@ -59,4 +68,14 @@ module "azure" {
       azurerm = azurerm
       azuread = azuread
     }
+}
+
+module "github" {
+  source = "../github"
+
+  organization_name = var.gh_organization_name
+  members_filepath = var.gh_members_filepath
+
+  project = var.project
+  project_admin = var.gh_project_admin
 }
